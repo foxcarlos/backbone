@@ -26,6 +26,24 @@ var PersonView = Backbone.View.extend({
 	}
 });
 
+var PeopleView = Backbone.View.extend({
+    tagName: 'ul',
+
+    initialize: function(){
+        console.log(this.collection)
+    },
+
+    render: function(){
+        this.collection.each(function(person){
+            console.log('log de person');
+            console.log(person);
+            //var personaVista = new PersonView({model: person});
+            //console.log(personView.el);
+        });
+    }
+
+});
+
 var peopleCollection = new PeopleCollection([
         {
             nombre: 'Carlos', edad: 43, ocupacion:'Developer'
@@ -38,3 +56,5 @@ var peopleCollection = new PeopleCollection([
         }
         ]);
 
+// en consola
+// var peopleView = new PeopleView({ collection: peopleCollection });
