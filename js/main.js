@@ -25,3 +25,16 @@ var PersonView = Backbone.View.extend({
 		//this.$el.html(this.miPlantilla());
 	}
 });
+
+var peopleCollection = new PeopleCollection([
+        {
+            nombre: 'Carlos', edad: 43, ocupacion:'Developer'
+        },
+        {
+            nombre:'Nairesther', edad:26, ocupacion:'Educadora'
+        },
+        {
+            nombre: 'Carla', edad:6, ocupacion: 'Estudiante'
+        }
+        ]);
+
