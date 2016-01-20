@@ -30,16 +30,15 @@ var PeopleView = Backbone.View.extend({
     tagName: 'ul',
 
     initialize: function(){
-        console.log(this.collection)
+        console.log('metodo initialize de PeopleView');
     },
 
     render: function(){
         this.collection.each(function(person){
-            console.log('log de person');
-            console.log(person);
-            //var personaVista = new PersonView({model: person});
-            //console.log(personView.el);
-        });
+            var personaVista = new PersonView({model: person});
+            //console.log(personaVista.el);
+            this.$el.append(personaVista.el)
+        }, this);
     }
 
 });
@@ -58,3 +57,6 @@ var peopleCollection = new PeopleCollection([
 
 // en consola
 // var peopleView = new PeopleView({ collection: peopleCollection });
+// peopleView.render();
+// peopleView.el;
+// $(document.body).html(peopleView.el)
