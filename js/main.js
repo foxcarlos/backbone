@@ -1,3 +1,7 @@
+var plantilla = function(id){
+    return _.template( $('#' + id).html() );
+};
+
 var Person = Backbone.Model.extend({
 	defaults:{
 		nombre: 'Usuario Guest',
@@ -6,15 +10,16 @@ var Person = Backbone.Model.extend({
 	}
 });
 
+//Creacion de Coleccion basado en el Modelo de una persona
 var PeopleCollection = Backbone.Collection.extend({
     model: Person
 });
 
+//Vista para un Modelo de personas
 var PersonView = Backbone.View.extend({
 	tagName: 'li',
 
-	miPlantilla: _.template($('#personaPlantilla').html()) ,
-	//miPlantilla: _.template($('#formUser').html()) ,
+	miPlantilla: plantilla('personaPlantilla'),  // _.template($('#personaPlantilla').html()) ,
 
 	initialize: function(){
 		this.render();
@@ -22,10 +27,11 @@ var PersonView = Backbone.View.extend({
 
 	render: function(){
 		this.$el.html(this.miPlantilla(this.model.toJSON()));
-		//this.$el.html(this.miPlantilla());
+        return this;
 	}
 });
 
+//Vista para Coleccion de Personas
 var PeopleView = Backbone.View.extend({
     tagName: 'ul',
 
@@ -36,13 +42,14 @@ var PeopleView = Backbone.View.extend({
     render: function(){
         this.collection.each(function(person){
             var personaVista = new PersonView({model: person});
-            //console.log(personaVista.el);
-            this.$el.append(personaVista.el)
+            this.$el.append(personaVista.render().el);
         }, this);
+        return this;
     }
 
 });
 
+//Agregar datos a una coleccion
 var peopleCollection = new PeopleCollection([
         {
             nombre: 'Carlos', edad: 43, ocupacion:'Developer'
@@ -52,11 +59,11 @@ var peopleCollection = new PeopleCollection([
         },
         {
             nombre: 'Carla', edad:6, ocupacion: 'Estudiante'
+        },
+        {
+            nombre: 'Carla', edad:6, ocupacion: 'Estudiante'
         }
         ]);
 
-// en consola
-// var peopleView = new PeopleView({ collection: peopleCollection });
-// peopleView.render();
-// peopleView.el;
-// $(document.body).html(peopleView.el)
+var peopleView = new PeopleView({ collection: peopleCollection });
+$(document.body).append(peopleView.render().el);   // adding people view in DOM.. Only for demo purpose...
